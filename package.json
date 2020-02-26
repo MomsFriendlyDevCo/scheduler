@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@momsfriendlydevco/eventer": "^1.4.0",
+    "cron-parser": "^2.13.0",
     "fix-time": "^2.1.0",
     "lodash": "^4.17.15",
     "timestring": "^6.0.0"

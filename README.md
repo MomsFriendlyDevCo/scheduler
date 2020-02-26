@@ -3,6 +3,15 @@
 Generic Cron-like scheduler for tasks that should execute periodically.
 
 
+Scheduled times
+---------------
+The following scheduled times are supported:
+
+* `* * * * *` (i.e. six cron-timings) - Parsed by [cron-parser](https://github.com/harrisiirak/cron-parser)
+* `every *` (reoccuring intervals) - Parsed by [timestring](https://github.com/mike182uk/timestring)
+* `*` (everything else) - Parsed by [fix-time](https://github.com/cefn/fix-time)
+
+
 Debugging
 =========
 This module uses the [debug NPM module](https://github.com/visionmedia/debug) for debugging. To enable set the environment variable to `DEBUG=scheduler` or `DEBUG=scheduler*` for detail.

@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var debug = require('debug')('scheduler');
+var cronParser = require('cron-parser');
 var eventer = require('@momsfriendlydevco/eventer');
 var parseTime = require('fix-time');
 var timeString = require('timestring');
@@ -155,7 +156,13 @@ Scheduler.Task = function(timing, cb) {
 		var now = ct.dateMidnight();
 		ct.nextTick = ct._timing
 			.map(v => {
-				if (v.startsWith('every ')) {
+				if (/^\s*.+\s+.+\s+.+\s+.+\s+.+\s*.+\s*$/.test(v)) {
+					var parsed = cronParser.parseExpression(v, {
+						currentDate: ct.dateNow(),
+						iterator: false,
+					});
+					return parsed.next().toDate();
+				} else if (v.startsWith('every ')) {
 					var offset = timeString(v.substr(6), 'ms');
 					if (!offset) return;
 					return new Date(ct.dateNow().getTime() + offset);

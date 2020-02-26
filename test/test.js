@@ -44,6 +44,12 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 
 		s.timing('every 1h45m2s');
 		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T01:45:02')));
+
+		s.timing('0 1 * * * *');
+		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T00:01:00')));
+
+		s.timing('0 0 */3 * * *');
+		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T03:00:00')));
 	});
 
 	it('should parse array time strings', ()=> {
