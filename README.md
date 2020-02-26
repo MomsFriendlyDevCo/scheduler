@@ -24,7 +24,7 @@ Global settings for the scheduler.
 Available settings:
 
 | Setting        | Type      | Default      | Description                                                                                    |
-|--------------------------------------------------------------------------------------------------------------------------------------------|
+|----------------|-----------|--------------|------------------------------------------------------------------------------------------------|
 | `autoStart`    | `boolean` | `true`       | Automatically call `Scheduler.start()` when initialized                                        |
 | `tickTimeout`  | `number`  | `1000` (~1s) | The precision of when to check the scheduled task queue                                        |
 | `timeBias`     | `number`  | `0`          | What offset (in milliseconds) to add to each timing                                            |
