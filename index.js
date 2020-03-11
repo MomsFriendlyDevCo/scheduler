@@ -27,7 +27,7 @@ Scheduler.tick = ()=> {
 		.then(()=> debug('Tick!', tickDate))
 		.then(()=> Scheduler.emit('tick'))
 		.then(()=> debug('Tick complete'))
-		.then(()=> setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout));
+		.then(()=> Scheduler.timer = setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout));
 	return Scheduler;
 };
 
@@ -40,7 +40,7 @@ Scheduler.tick = ()=> {
 */
 Scheduler.start = ()=> {
 	debug('Scheduler started');
-	if (Scheduler.ticking) return Scheduler;
+	if (Scheduler.timer) return Scheduler;
 	Scheduler.timer = setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout);
 	return Scheduler;
 };
@@ -52,9 +52,10 @@ Scheduler.start = ()=> {
 * @returns {Scheduler}
 */
 Scheduler.pause = ()=> {
-	if (Scheduler.ticking) return Scheduler;
+	if (!Scheduler.timer) return Scheduler;
 	debug('Scheduler paused');
 	clearTimeout(Scheduler.timer);
+	delete Scheduler.timer;
 	return Scheduler;
 };
 
