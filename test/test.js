@@ -1,6 +1,7 @@
 var scheduler = require('..');
 var expect = require('chai').expect;
 var moment = require('moment');
+var sinon = require('sinon');
 
 describe('@momsfriendlydevco/scheduler', ()=> {
 
@@ -19,6 +20,21 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 			return isSame;
 		};
 	};
+
+	xit('should trigger callback', (done)=> {
+		//var spy = sinon.spy();
+		var spy = () => {
+			console.log('called');
+		};
+		var s = new scheduler.Task('in 1 seconds', spy);
+		scheduler.start();
+		setTimeout(() => {
+			//sinon.assert.calledOnce(spy);
+			scheduler.pause();
+			console.log('done');
+			done();
+		}, 1500);
+	}).timeout(5000);
 
 	it('should parse simple time strings', ()=> {
 		var s = new scheduler.Task('12pm');

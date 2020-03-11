@@ -26,6 +26,7 @@
     "debug": "^4.1.1",
     "fix-time": "^2.1.0",
     "lodash": "^4.17.15",
+    "sinon": "^9.0.1",
     "timestring": "^6.0.0"
   },
   "devDependencies": {
