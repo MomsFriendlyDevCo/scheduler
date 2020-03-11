@@ -28,21 +28,21 @@ Scheduler.tick = ()=> {
 		.then(()=> Scheduler.emit('tick'))
 		.then(()=> debug('Tick complete'))
 		.then(()=> setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout));
-	return Scheulder;
+	return Scheduler;
 };
 
 
 /**
 * Start the scheduler
 * Scheduler will emit tick events which subscribers can listen to and respond with a promise
-* Automatically executed if Scheulder.autoStart is truthy
+* Automatically executed if Scheduler.autoStart is truthy
 * @returns {Scheduler}
 */
 Scheduler.start = ()=> {
 	debug('Scheduler started');
-	if (Scheduler.ticking) return Scheulder;
-	Scheulder.timer = setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout);
-	return Scheulder;
+	if (Scheduler.ticking) return Scheduler;
+	Scheduler.timer = setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout);
+	return Scheduler;
 };
 
 
@@ -52,9 +52,9 @@ Scheduler.start = ()=> {
 * @returns {Scheduler}
 */
 Scheduler.pause = ()=> {
-	if (Scheduler.ticking) return Scheulder;
+	if (Scheduler.ticking) return Scheduler;
 	debug('Scheduler paused');
-	clearTimeout(Scheulder.timer);
+	clearTimeout(Scheduler.timer);
 	return Scheduler;
 };
 
