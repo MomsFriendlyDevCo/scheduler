@@ -1,6 +1,6 @@
 {
   "name": "@momsfriendlydevco/scheduler",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Simple Cron-like scheduler for reoccurring tasks",
   "main": "index.js",
   "directories": {
