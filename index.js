@@ -41,6 +41,10 @@ Scheduler.tick = ()=> {
 Scheduler.start = ()=> {
 	debug('Scheduler started');
 	if (Scheduler.timer) return Scheduler;
+	// FIXME: Using `setInterval` could prevent 1ms of lag? `tick` redefining timer may introduce gradual creep.
+	// scheduler Tick! 2020-03-12T01:03:51.383Z +1s
+	// scheduler Tick! 2020-03-12T01:03:52.384Z +1s
+	// scheduler Tick! 2020-03-12T01:03:53.385Z +1s
 	Scheduler.timer = setTimeout(Scheduler.tick, Scheduler.settings.tickTimeout);
 	return Scheduler;
 };
@@ -122,6 +126,10 @@ Scheduler.Task = function(timing, cb) {
 	ct.task = task => {
 		if (!task) throw new Error('No task payload provided');
 		ct._task = task;
+		Scheduler.on('tick', () => {
+			if (Date.now() >= ct.nextTick)
+				ct._task.call();
+		});
 		return ct;
 	};
 

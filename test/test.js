@@ -21,20 +21,27 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 		};
 	};
 
-	xit('should trigger callback', (done)=> {
-		//var spy = sinon.spy();
-		var spy = () => {
-			console.log('called');
-		};
-		var s = new scheduler.Task('in 1 seconds', spy);
-		scheduler.start();
-		setTimeout(() => {
-			//sinon.assert.calledOnce(spy);
+	describe('callback', ()=> {
+		beforeEach(() => {
+			scheduler.start();
+		});
+
+		afterEach(() => {
 			scheduler.pause();
-			console.log('done');
-			done();
-		}, 1500);
-	}).timeout(5000);
+		});
+
+		it('should trigger when expected', (done)=> {
+			var spy = sinon.spy();
+			var s = new scheduler.Task('in 1 seconds', spy);
+			// Inject mock timeout
+			s.nextTick = new Date(Date.now() + 2500);
+			//console.log('nextTick', s.nextTick);
+			setTimeout(() => {
+				sinon.assert.calledOnce(spy);
+				done();
+			}, 3500);
+		}).timeout(5000);
+	});
 
 	it('should parse simple time strings', ()=> {
 		var s = new scheduler.Task('12pm');
