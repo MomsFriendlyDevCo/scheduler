@@ -127,8 +127,10 @@ Scheduler.Task = function(timing, cb) {
 		if (!task) throw new Error('No task payload provided');
 		ct._task = task;
 		Scheduler.on('tick', () => {
-			if (Date.now() >= ct.nextTick)
+			if (Date.now() >= ct.nextTick) {
 				ct._task.call();
+				ct.scheduleNext();
+			}
 		});
 		return ct;
 	};
