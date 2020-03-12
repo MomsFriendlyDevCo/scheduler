@@ -132,6 +132,7 @@ Scheduler.Task = function(timing, cb) {
 	* @returns {Task} This chainable instance
 	*/
 	ct.task = task => {
+		Scheduler.off('tick', ct.tick);
 		if (!task) throw new Error('No task payload provided');
 		ct._task = task;
 		Scheduler.on('tick', ct.tick);
