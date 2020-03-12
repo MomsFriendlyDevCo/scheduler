@@ -102,6 +102,14 @@ Scheduler.Task = function(timing, cb) {
 	*/
 	ct.check;
 
+	/**
+	 * Event subscription handler
+	 */
+	ct.tick = () => {
+		if (Date.now() >= ct.nextTick)
+			return Promise.resolve(ct._task.call(ct)).finally(ct.scheduleNext);
+	};
+
 
 	/**
 	* Set the parsable time string for when task execution should be scheduled
@@ -126,10 +134,7 @@ Scheduler.Task = function(timing, cb) {
 	ct.task = task => {
 		if (!task) throw new Error('No task payload provided');
 		ct._task = task;
-		Scheduler.on('tick', () => {
-			if (Date.now() >= ct.nextTick)
-				return Promise.resolve(ct._task.call(ct)).finally(ct.scheduleNext);
-		});
+		Scheduler.on('tick', ct.tick);
 		return ct;
 	};
 
