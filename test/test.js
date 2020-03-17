@@ -73,6 +73,9 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 
 		s.timing('0 0 */3 * * *');
 		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T03:00:00')));
+
+		s.timing('*/1 * * * * *');
+		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T00:00:01')));
 	});
 
 	it('should parse array time strings', ()=> {
