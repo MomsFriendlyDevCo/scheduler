@@ -177,6 +177,13 @@ Scheduler.Task = function(timing, cb) {
 						iterator: false,
 					});
 					return parsed.next().toDate();
+				// Support for cron strings without seconds
+				} else if (/^\s*.+\s+.+\s+.+\s+.+\s*.+\s*$/.test(v)) {
+					var parsed = cronParser.parseExpression('0 ' + v, {
+						currentDate: ct.dateNow(),
+						iterator: false,
+					});
+					return parsed.next().toDate();
 				} else if (v.startsWith('every ')) {
 					var offset = timeString(v.substr(6), 'ms');
 					if (!offset) return;

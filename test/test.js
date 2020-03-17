@@ -76,6 +76,10 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 
 		s.timing('*/1 * * * * *');
 		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T00:00:01')));
+
+		// Support cron strings without seconds
+		s.timing('*/1 * * * *');
+		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-01-30T00:01:00')));
 	});
 
 	it('should parse array time strings', ()=> {
