@@ -2,6 +2,8 @@
 ============================
 Generic Cron-like scheduler for tasks that should execute periodically.
 
+This module is intended as a low-level scheduler for [@MomsFriendlyDevCo/Agents](https://github.com/MomsFriendlyDevCo/agents).
+
 
 Scheduled times
 ---------------
@@ -58,27 +60,52 @@ Resume / execute the scheduler and begin checking for queued tasks on each `Sche
 Returns the chainable Scheduler instance.
 
 
-Scheduler.pause()
------------------
+Scheduler.stop() / Scheduler.pause()
+------------------------------------
 Stops the scheduler, which will not check for future tick items.
 Returns the chainable Scheduler instance.
 
 
-Scheduler.Task(timing, cb)
---------------------------
+Scheduler.Task(timing, cb, scheduler)
+-------------------------------------
 Task instance created within a scheduler.
 `timing` is an array of timings or a CSV of timings.
 `cb` is an optional callback function which gets attached.
+`scheduler` is an optional binding to the parent scheduler.
 
 
-Scheduler.Task.timing(newTiming)
---------------------------------
+Task.timing(newTiming)
+----------------------
 Resets and reschedules the task based on the new timing.
 This overrides the timing provided in the constructor.
 Returns the chainable Task instance.
 
 
-Scheduler.Task.task(cb)
------------------------
+Task.task(cb)
+-------------
 Sets the task to execute as if used in the constructor.
+Returns the chainable Task instance.
+
+
+Task.taskCatch(cb)
+------------------
+Set the catch handler when a task fails.
+Returns the chainable Task instance.
+
+
+Task.start()
+------------
+Reschedule a task.
+Returns the chainable Task instance.
+
+
+Task.stop()
+-----------
+Unschedule a task from its parent Scheduler.
+Returns the chainable Task instance.
+
+
+Task.attachTo(scheduler)
+------------------------
+Reschedule a task to a new scheduler.
 Returns the chainable Task instance.
