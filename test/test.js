@@ -93,7 +93,7 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 	});
 
 	it('should handle repetitive tasks that resolve correctly', function(done) {
-		this.timeout(6 * 1000); //= 6s
+		this.timeout(10 * 1000); //= 10s
 
 		var responses = 0;
 		var task = scheduler.Task()
@@ -115,8 +115,8 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 		}, 5000);
 	});
 
-	it.skip('should handle repetitive tasks that resolve intermittently', function(done) {
-		this.timeout(6 * 1000); //= 6s
+	it('should handle repetitive tasks that resolve intermittently', function(done) {
+		this.timeout(10 * 1000); //= 10s
 
 		var responses = {ticks: 0, ok: 0, notok: 0};
 		var task = scheduler.Task('every 1s')
@@ -131,6 +131,7 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 					throw new Error('Intentional task fail');
 				}
 			})
+			.taskCatch(e => mlog.log('Intentional throw -', e))
 
 		scheduler.start();
 
@@ -139,7 +140,7 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 		}, 4500);
 
 		setTimeout(()=> { // Wait ~6s for the above scenario to play out
-			expect(responses).to.deep.equal({ok: 2, notok: 2});
+			expect(responses).to.deep.equal({ticks: 4, ok: 2, notok: 2});
 			done();
 		}, 6000);
 	});
