@@ -2,7 +2,7 @@
   "name": "@momsfriendlydevco/scheduler",
   "version": "0.0.10",
   "description": "Simple Cron-like scheduler for reoccurring tasks",
-  "main": "index.js",
+  "main": "./lib/Scheduler.js",
   "directories": {
     "test": "test"
   },
@@ -25,7 +25,6 @@
     "cron-parser": "^2.13.0",
     "debug": "^4.1.1",
     "fix-time": "^2.1.0",
-    "lodash": "^4.17.15",
     "timestring": "^6.0.0"
   },
   "devDependencies": {
