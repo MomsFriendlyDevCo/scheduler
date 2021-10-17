@@ -26,12 +26,13 @@
     "debug": "^4.1.1",
     "fix-time": "^2.1.0",
     "lodash": "^4.17.15",
-    "sinon": "^9.0.1",
     "timestring": "^6.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.0.1",
-    "moment": "^2.24.0"
+    "mocha-logger": "^1.0.7",
+    "moment": "^2.24.0",
+    "sinon": "^9.0.1"
   }
 }
