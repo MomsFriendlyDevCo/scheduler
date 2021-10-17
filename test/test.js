@@ -22,6 +22,8 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 		};
 	};
 
+	after('stop scheduler', ()=> scheduler.stop());
+
 	it('should parse simple time strings', ()=> {
 		var s = scheduler.Task('12pm');
 		expect(s).to.have.deep.property('_timing', ['12pm']);
@@ -87,21 +89,24 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 		s.dateMidnight = ()=> new Date('2020-02-01T00:00:00');
 		s.scheduleNext();
 		expect(s.nextTick).to.satisfy(dateCheck(new Date('2020-02-01T13:00:00')));
+		scheduler.settings.timeBias = 0;
 	});
 
-	it.skip('should handle repetitive tasks that resolve correctly', function(done) {
+	it('should handle repetitive tasks that resolve correctly', function(done) {
 		this.timeout(6 * 1000); //= 6s
 
 		var responses = 0;
-		var task = scheduler.Task('every 1s')
+		var task = scheduler.Task()
+			.timing('every 1s')
 			.task(()=> {
 				mlog.log('Task pulse', ++responses);
 				return true;
 			})
+
 		scheduler.start();
 
 		setTimeout(()=> { // Wait ~3s and remove task
-			task.destroy(); // Release task
+			task.stop(); // Release task
 		}, 3500);
 
 		setTimeout(()=> { // Wait ~5s for the above scenario to play out
@@ -130,7 +135,7 @@ describe('@momsfriendlydevco/scheduler', ()=> {
 		scheduler.start();
 
 		setTimeout(()=> { // Wait ~4s and remove task
-			task.destroy(); // Release task
+			task.stop(); // Release task
 		}, 4500);
 
 		setTimeout(()=> { // Wait ~6s for the above scenario to play out
